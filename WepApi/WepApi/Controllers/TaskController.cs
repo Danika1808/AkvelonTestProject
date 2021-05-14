@@ -89,8 +89,21 @@ namespace WepApi.Controllers
         [HttpPost]
         public async Task<ActionResult<EntityState>> Create(string name, int stateNum, int priorityNum, string description, Guid projectId)
         {
-            var project = await _projectRepository.DetailsAsync(projectId);
+            if (projectId.Equals(Guid.Empty))
+            {
+                return BadRequest();
+            }
 
+            var project = await _projectRepository.DetailsAsync(projectId);
+            if (!(stateNum >= 0 && stateNum <= 2))
+            {
+                return BadRequest();
+            }
+            if (!(priorityNum >= 0 && priorityNum <= 3))
+            {
+                return BadRequest();
+            }
+            
             var state = (Project.States)stateNum;
             var taskEntity = new TaskEntity(name, state.ToString(), priorityNum, description, project);
             var result = await _repository.CreateAsync(taskEntity);

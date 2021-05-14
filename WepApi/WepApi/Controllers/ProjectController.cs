@@ -86,6 +86,14 @@ namespace WepApi.Controllers
             {
                 return BadRequest();
             }
+            if (!(stateNum >= 0 && stateNum <= 2))
+            {
+                return BadRequest();
+            }
+            if (!(priorityNum >= 0 && priorityNum <= 3))
+            {
+                return BadRequest();
+            }
             var state = (Project.States)stateNum;
             var project = new Project(name, state.ToString(), priorityNum, date);
             var result = await _repository.CreateAsync(project);
