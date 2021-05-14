@@ -5,8 +5,6 @@ Requirements
 - Visual Studio
 - SQL Server
 
-
--
 To run the sample locally from Visual Studio:
 
 - Build the solution.
